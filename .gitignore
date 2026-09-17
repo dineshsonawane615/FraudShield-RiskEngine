@@ -1,6 +1,45 @@
-backend/.venv/
-frontend/node_modules/
-frontend/.next/
+# ── Python ──────────────────────────────────────────
 __pycache__/
-*.pyc
-.env.localgit add .
+*.py[cod]
+*.pyo
+.Python
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.local
+.env.production
+*.env
+
+# Database (ephemeral on server — recreated on startup)
+*.db
+*.db-shm
+*.db-wal
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# ── Node / Next.js ───────────────────────────────────
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel/
+pnpm-lock.yaml
+
+# ── OS / Editor ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ── NOTE: trained_models/*.joblib must be committed ──
+# Do NOT add trained_models/ here — those files must
+# be in the repository for Railway to serve real ML.

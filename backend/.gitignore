@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment secrets — NEVER commit real .env
+.env
+.env.local
+.env.production
+
+# Database file — ephemeral, recreated on server startup
+fraudshield.db
+fraudshield.db-shm
+fraudshield.db-wal
+
+# Pytest cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# NOTE: trained_models/ is intentionally NOT ignored.
+# The .joblib model files must be committed so Railway/Render
+# can serve real ML predictions without re-training on every deploy.
