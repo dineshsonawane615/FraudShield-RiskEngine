@@ -1,0 +1,44 @@
+{
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "pr_auc": 1.0,
+  "false_positive_rate": 0.0,
+  "false_negative_rate": 0.0,
+  "confusion_matrix": [
+    [
+      1940,
+      0
+    ],
+    [
+      0,
+      60
+    ]
+  ],
+  "feature_columns": [
+    "amount",
+    "customer_avg_amount",
+    "amount_ratio",
+    "amount_z_score",
+    "is_new_device",
+    "transactions_last_10min",
+    "transactions_last_1hour",
+    "transactions_last_24hours",
+    "unusual_time",
+    "location_anomaly",
+    "distance_from_usual_location",
+    "customer_transaction_count",
+    "hour",
+    "day_of_week",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8",
+    "V9",
+    "V10"
+  ]
+}

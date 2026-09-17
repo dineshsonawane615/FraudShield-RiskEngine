@@ -1,0 +1,113 @@
+﻿python : C:\Users\Dinesh\AppData\Local\Programs\Pytho
+n\Python311\Lib\site-packages\fastapi\testclient.py:1
+: StarletteDeprecationWarning: Using `httpx` with 
+`starlette.testclient` is deprecated; install 
+`httpx2` instead.
+At line:1 char:32
++ $env:PYTHONIOENCODING="utf-8"; python 
+test_all_cases.py 2>&1 | Out-St ...
++                                
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\User 
+   s\Dinesh...ttpx2` instead.:String) [], RemoteExc  
+  eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  from starlette.testclient import TestClient as 
+TestClient  # noqa
+[Seed] Seeding database with demo customers and transactions...
+[Seed] Successfully seeded Customer C1001 and demo transactions (including TX_DEMO_SUSPICIOUS_999 -> HIGH / ALERT).
+[FraudModelService] Loaded XGBoost model from C:\Users\Dinesh\OneDrive\Desktop\d\new one\backend\trained_models\xgboost_model.joblib
+[AnomalyModelService] Loaded Isolation Forest model from C:\Users\Dinesh\OneDrive\Desktop\d\new one\backend\trained_models\isolation_forest.joblib
+============================================================
+ FraudShield AI ΓÇö Comprehensive Endpoint Testing
+============================================================
+
+--- 1. GET /api/health ---
+  [PASS] Health basic
+  [PASS] Root endpoint
+
+--- 2. POST /api/predict ΓÇö Normal Transactions ---
+  [PASS] Normal transaction Γé╣1500 Pune DEV001
+  [PASS] Normal transaction Γé╣2500 Pune DEV001
+  [PASS] Normal transaction Γé╣3100 same device/location
+
+--- 3. POST /api/predict ΓÇö Suspicious Transactions ---
+  [PASS] Suspicious Γé╣45000 Mumbai DEV999 3am velocity=8
+  [PASS] New device only, normal everything else
+  [PASS] Unusual time only, normal everything else
+  [PASS] High velocity only, normal everything else
+  [PASS] Location anomaly only
+  [PASS] Extreme fraud Γé╣500000 all flags
+
+--- 4. POST /api/predict ΓÇö Edge Cases ---
+  [PASS] Unknown customer cold-start
+  [PASS] Minimal payload (only customer_id + amount)
+  [PASS] Zero amount (should return 422)
+  [PASS] Negative amount (should return 422)
+  [PASS] Missing customer_id (should return 422)
+  [PASS] Invalid hour=25 (should return 422)
+  [PASS] Empty body (should return 422)
+  [PASS] String amount (should return 422)
+  [PASS] Very small amount Γé╣0.01
+
+--- 5. GET /api/transactions ---
+  [PASS] Get all transactions
+  [PASS] Filter by risk_level=HIGH
+  [PASS] Filter by risk_level=LOW
+  [PASS] Filter by decision=ALERT
+  [PASS] Filter by customer_id=C1001
+  [PASS] Limit=2
+  [PASS] Invalid limit=0 (should return 422)
+  [PASS] Filter nonexistent customer
+
+--- 6. GET /api/transactions/{id} ---
+  [PASS] Get transaction by valid ID
+  [PASS] Transaction not found (should return 404)
+  [PASS] Get seeded suspicious demo transaction
+
+--- 7. GET /api/alerts ---
+  [PASS] Get all alerts
+  [PASS] Filter alerts status=OPEN
+  [PASS] Filter alerts status=RESOLVED
+  [PASS] Alert auto-created for HIGH risk prediction
+  [PASS] No alert for LOW risk prediction
+
+--- 8. GET /api/customers ---
+  [PASS] Get customer C1001
+  [PASS] Get customer C1002
+  [PASS] Customer not found (should return 404)
+
+--- 9. GET /api/customers/{id}/history ---
+  [PASS] Customer C1001 history
+  [PASS] Customer history for nonexistent customer
+
+--- 10. POST /api/feedback ---
+  [PASS] Feedback: MARK_LEGITIMATE
+  [PASS] Feedback: CONFIRM_FRAUD
+  [PASS] Feedback: INVESTIGATE
+  [PASS] Feedback: ESCALATE
+  [PASS] Feedback on nonexistent transaction (should return 404)
+  [PASS] Feedback: Invalid action
+  [PASS] Feedback: Missing action (should return 422)
+  [PASS] Feedback: Missing transaction_id (should return 422)
+  [PASS] Feedback: No comment (optional)
+  [PASS] Feedback updates alert status to RESOLVED
+
+--- 11. GET /api/metrics ---
+  [PASS] Metrics basic response
+  [PASS] Metrics values in valid ranges
+  [PASS] Metrics: high+medium+low = total
+
+--- 12. Cross-customer C1002 tests ---
+  [PASS] C1002 normal transaction
+  [PASS] C1002 suspicious transaction
+
+--- 13. Response schema verification ---
+  [PASS] Predict response schema completeness
+  [PASS] top_risk_factors schema
+
+============================================================
+ RESULTS: 58 passed, 0 failed
+============================================================
+
