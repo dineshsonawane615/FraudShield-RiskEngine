@@ -10,8 +10,7 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./fraudshield.db")
     
-    # CORS — Never use "*" with allow_credentials=True; list explicit origins only.
-    # In production: set FRONTEND_URL env var in Railway to your Vercel deployment URL.
+    # CORS
     ALLOWED_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
@@ -20,8 +19,8 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
     ]
 
-    # Production frontend URL — set this in Railway env vars (e.g. https://your-app.vercel.app)
-    FRONTEND_URL: str = ""
+    # Production frontend URL — set this env var (e.g. https://fraud-shield-risk-engine-ymhs.vercel.app)
+    FRONTEND_URL: str = os.getenv("FRONTEND_URL", "")
     
     # Model settings — config.py is at backend/app/config.py, go up one level to backend/
     MODELS_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "trained_models"))
@@ -43,7 +42,14 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# Dynamically add the production frontend URL to CORS whitelist at startup.
-# Set FRONTEND_URL=https://your-app.vercel.app in Railway environment variables.
+# Parse ALLOWED_ORIGINS from environment if provided
+env_allowed_origins = os.getenv("ALLOWED_ORIGINS", "")
+if env_allowed_origins:
+    origins_list = [o.strip() for o in env_allowed_origins.split(",") if o.strip()]
+    for origin in origins_list:
+        if origin not in settings.ALLOWED_ORIGINS:
+            settings.ALLOWED_ORIGINS.append(origin)
+
 if settings.FRONTEND_URL and settings.FRONTEND_URL not in settings.ALLOWED_ORIGINS:
     settings.ALLOWED_ORIGINS.append(settings.FRONTEND_URL)
+
